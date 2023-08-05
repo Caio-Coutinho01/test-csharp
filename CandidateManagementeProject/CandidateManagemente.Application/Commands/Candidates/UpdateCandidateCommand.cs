@@ -1,10 +1,15 @@
-﻿using CandidateManagemente.Domain.Entities;
-using MediatR;
+﻿using MediatR;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace CandidateManagemente.Application.Commands
+namespace CandidateManagemente.Application.Commands.Candidates
 {
-    public class AddCandidateCommand : IRequest<string>
+    public class UpdateCandidateCommand : IRequest<string>
     {
+        public int IdCandidate { get; set; }
         public string Name { get; set; }
         public string Surname { get; set; }
         public DateTime BirthDate { get; set; }

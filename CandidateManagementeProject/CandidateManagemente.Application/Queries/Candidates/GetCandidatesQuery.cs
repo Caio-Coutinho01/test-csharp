@@ -2,7 +2,7 @@
 using CandidateManagemente.Domain.Response;
 using MediatR;
 
-namespace CandidateManagemente.Application.Queries
+namespace CandidateManagemente.Application.Queries.Candidates
 {
     public class GetCandidatesQuery : IRequest<List<CandidatesDto>>
     {

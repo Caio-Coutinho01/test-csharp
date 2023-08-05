@@ -5,10 +5,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CandidateManagemente.Application.Commands
+namespace CandidateManagemente.Application.Commands.Candidates
 {
     public class DeleteCandidateCommand : IRequest<string>
     {
-        public int idCandidate {get;set;}
+        public int idCandidate { get; set; }
     }
 }

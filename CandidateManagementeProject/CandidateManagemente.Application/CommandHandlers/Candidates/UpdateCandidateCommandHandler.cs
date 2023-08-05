@@ -1,16 +1,16 @@
-﻿using CandidateManagemente.Application.Commands;
+﻿using CandidateManagemente.Application.Commands.Candidates;
 using CandidateManagemente.Domain.Interface;
 using CandidateManagemente.Domain.Response;
 using MediatR;
 
-namespace CandidateManagemente.Application.CommandHandlers
+namespace CandidateManagemente.Application.CommandHandlers.Candidates
 {
     public class UpdateCandidateCommandHandler : IRequestHandler<UpdateCandidateCommand, string>
     {
         private readonly ICandidateRepository _candidateRepository;
         public UpdateCandidateCommandHandler(ICandidateRepository candidateRepository)
         {
-            this._candidateRepository = candidateRepository;
+            _candidateRepository = candidateRepository;
         }
 
         public Task<string> Handle(UpdateCandidateCommand command, CancellationToken cancellationToken)

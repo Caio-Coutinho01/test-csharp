@@ -3,30 +3,31 @@ using CandidateManagemente.Application.DTO;
 using CandidateManagemente.Domain.Entities;
 using CandidateManagemente.Domain.Interface;
 using CandidateManagemente.Domain.Response;
+using CandidateManagemente.Infra.Data.Context;
 using Microsoft.EntityFrameworkCore;
 
 namespace CandidateManagemente.Infra.Data.Repositories
 {
     public class CandidateRepository : ICandidateRepository
     {
-        private readonly DbContextOptions<DataContext> _context;
+        private readonly DbContextOptions<MyCustomDbContext> _context;
         public CandidateRepository()
         {
-            _context = new DbContextOptions<DataContext>();
+            _context = new DbContextOptions<MyCustomDbContext>();
         }
         public List<Candidates> GetAll()
         {
-            using (var date = new DataContext(_context))
+            using (var date = new MyCustomDbContext(_context))
             {
                 return date.Set<Candidates>().AsNoTracking().ToList();
             }
         }
         public List<OCandidateExperiences> GetId(int id)
         {
-            using (var date = new DataContext(_context))
+            using (var date = new MyCustomDbContext(_context))
             {
-                var query = from c in date.candidates
-                            join exp in date.candidateexperience on c.IdCandidate equals exp.IdCandidate
+                var query = from c in date.Candidates
+                            join exp in date.Experiences on c.IdCandidate equals exp.IdCandidate
                             where c.IdCandidate.Equals(id)
                             select new OCandidateExperiences
                             {
@@ -48,7 +49,7 @@ namespace CandidateManagemente.Infra.Data.Repositories
 
         public int AddCandidate(Candidates Cand)
         {
-            using (var date = new DataContext(_context))
+            using (var date = new MyCustomDbContext(_context))
             {
 
                 date.Set<Candidates>().Add(Cand);
@@ -58,7 +59,7 @@ namespace CandidateManagemente.Infra.Data.Repositories
         }
         public Task AddExperience(Experiences ExpCand)
         {
-            using (var date = new DataContext(_context))
+            using (var date = new MyCustomDbContext(_context))
             {
 
                 date.Set<Experiences>().Add(ExpCand);
@@ -68,12 +69,12 @@ namespace CandidateManagemente.Infra.Data.Repositories
         }
         public string Update(OCandidateExperiences obj)
         {
-            using (var date = new DataContext(_context))
+            using (var date = new MyCustomDbContext(_context))
             {
                 try
                 {
-                    var tbCandidateExperience = from c in date.candidates
-                                                join exp in date.candidateexperience on c.IdCandidate equals exp.IdCandidate
+                    var tbCandidateExperience = from c in date.Candidates
+                                                join exp in date.Experiences on c.IdCandidate equals exp.IdCandidate
                                                 where c.IdCandidate.Equals(exp.IdCandidate)
                                                 select new { exp.IdCandidateExperience, exp.InsertDate };
 
@@ -120,11 +121,11 @@ namespace CandidateManagemente.Infra.Data.Repositories
         }
         public string Delete(int Id)
         {
-            using (var date = new DataContext(_context))
+            using (var date = new MyCustomDbContext(_context))
             {
                 var notification = "";
-                var candidate = date.candidates.FirstOrDefault(p => p.IdCandidate == Id);
-                var experience = date.candidateexperience.FirstOrDefault(p => p.IdCandidate == Id);
+                var candidate = date.Candidates.FirstOrDefault(p => p.IdCandidate == Id);
+                var experience = date.Experiences.FirstOrDefault(p => p.IdCandidate == Id);
                 if (candidate != null && experience != null)
                 {
                     date.Set<Candidates>().Remove(candidate);

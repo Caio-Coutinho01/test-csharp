@@ -1,16 +1,16 @@
-﻿using CandidateManagemente.Application.Commands;
+﻿using CandidateManagemente.Application.Commands.Candidates;
 using CandidateManagemente.Domain.Entities;
 using CandidateManagemente.Domain.Interface;
 using MediatR;
 
-namespace CandidateManagemente.Application.CommandHandlers
+namespace CandidateManagemente.Application.CommandHandlers.Candidates
 {
     public class AddCandidateCommandHandler : IRequestHandler<AddCandidateCommand, string>
     {
         private readonly ICandidateRepository _candidateRepository;
         public AddCandidateCommandHandler(ICandidateRepository candidateRepository)
         {
-           this._candidateRepository= candidateRepository;
+            _candidateRepository = candidateRepository;
         }
 
         public Task<string> Handle(AddCandidateCommand command, CancellationToken cancellationToken)
@@ -18,7 +18,7 @@ namespace CandidateManagemente.Application.CommandHandlers
             var notification = "";
             try
             {
-                var candidate = new Candidates
+                var candidate = new Domain.Entities.Candidates
                 {
                     Name = command.Name,
                     Surname = command.Surname,
@@ -27,7 +27,7 @@ namespace CandidateManagemente.Application.CommandHandlers
                     InsertDate = DateTime.Now
                 };
                 var idCandidate = _candidateRepository.AddCandidate(candidate);
-                
+
                 var experiences = new Experiences
                 {
                     IdCandidate = idCandidate,
@@ -40,16 +40,16 @@ namespace CandidateManagemente.Application.CommandHandlers
                     InsertDate = DateTime.Now
                 };
 
-                if(command.CurrentJob == true)
+                if (command.CurrentJob == true)
                     experiences.EndDate = null;
-                
+
                 _candidateRepository.AddExperience(experiences);
-                notification = ("Candidate successfully added");
+                notification = "Candidate successfully added";
                 return Task.FromResult(notification);
             }
-            catch (System.Exception ex)
+            catch (Exception ex)
             {
-                notification = (" There was an error registering the candidate");
+                notification = " There was an error registering the candidate";
                 return Task.FromResult(notification);
             }
         }

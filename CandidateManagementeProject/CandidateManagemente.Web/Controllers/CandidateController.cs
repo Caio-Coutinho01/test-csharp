@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
-using CandidateManagemente.Application.Commands;
+using CandidateManagemente.Application.Commands.Candidates;
 using CandidateManagemente.Application.DTO;
-using CandidateManagemente.Application.Queries;
+using CandidateManagemente.Application.Queries.Candidates;
 using CandidateManagemente.Domain.Entities;
 using CandidateManagemente.Infra.Data.Repositories;
 using CandidateManagemente.Web.ViewModel;

@@ -22,8 +22,6 @@ namespace CandidateManagemente.Infra.Data.MappingEntityConfig
             builder.Property(p => p.InsertDate).HasColumnType("datetime");
             builder.Property(p => p.ModifyDate).HasColumnType("datetime");
             builder.HasOne(p => p.Candidates).WithMany().HasForeignKey(p => p.IdCandidate);
-            
-
         }
     }
 }
